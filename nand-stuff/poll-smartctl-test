@@ -1,0 +1,41 @@
+from datetime import datetime, timedelta
+import time
+import subprocess
+import json
+
+def poll_data(frequency, duration, drive, waf_treshold):
+    end = datetime.now() + timedelta(minutes=duration)
+
+    failures = []
+    while datetime.now() < end:
+        try:
+
+            data = subprocess.run(f"smartctl --json -x -a /dev/{drive}", capture_output=True, text=True, timeout=(frequency-0.5)*60, shell=True)
+
+            result = json.loads(data.stdout)
+            nand_bytes_written = data["nand_bytes_written"]
+            host_bytes_written = data["host_bytes_written"]
+
+            if nand_bytes_written <= 0:
+                print("log info")
+                continue
+            if host_bytes_written <= 0:
+                print("log info")
+                continue
+            
+            waf = nand_bytes_written / host_bytes_written
+
+
+
+            if waf > waf_treshold:
+                failures.append(f"Time: {datetime.now()}, Drive: {drive}, WAF = {waf}, Host Bytes Written: {host_bytes_written}, NAND Bytes Written: {nand_bytes_written}")
+
+        except:
+            print("log information about when subprocess failed for test")
+            pass
+        time.sleep(frequency * 60)
+
+    return failures
+
+if __name__ == "__main__":
+    poll_data(1, 2, "nvme0n1p1", 3)
