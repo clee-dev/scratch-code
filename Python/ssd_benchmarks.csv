@@ -1,0 +1,13 @@
+drive_id,test_type,block_size,queue_depth,throughput_mbps,latency_us,temperature_c,status
+SSD_001,sequential_read,128k,32,3200.5,120.3,45,pass
+SSD_001,sequential_write,128k,32,2800.1,145.7,47,pass
+SSD_001,random_read,4k,1,98.3,850.2,46,pass
+SSD_001,random_write,4k,1,75.6,1200.4,52,fail
+SSD_002,sequential_read,128k,32,3150.2,125.1,43,pass
+SSD_002,sequential_write,128k,32,2750.8,150.3,44,pass
+SSD_002,random_read,4k,1,102.1,820.5,43,pass
+SSD_002,random_write,4k,1,80.2,1100.8,48,pass
+SSD_003,sequential_read,128k,32,2900.0,135.0,55,fail
+SSD_003,sequential_write,128k,32,2600.5,160.2,58,fail
+SSD_003,random_read,4k,1,88.5,950.3,56,fail
+SSD_003,random_write,4k,1,65.1,1400.6,61,fail
