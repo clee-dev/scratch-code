@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>phasor tool</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="mode-basic">
+
+<h1>PQube3 Phasor Correction</h1>
+
+<div class="mode-select">
+  <label><input type="radio" name="mode" value="basic" checked> Basic</label>
+  <label><input type="radio" name="mode" value="advanced"> Advanced</label>
+  <label><input type="checkbox" id="auto-toggle"> Auto-fill from file / device</label>
+</div>
+
+<p class="mode-desc" data-for="basic">enter what the channels currently display, assumes nothing has been swapped/inverted yet</p>
+<p class="mode-desc" data-for="advanced">also lets you say what's currently connected/inverted if a previous fix is already partly applied</p>
+
+<div class="auto-section">
+  <h2>Load Setup File</h2>
+  <input type="file" id="setup-file-input" accept=".ini">
+  <span id="setup-file-status"></span>
+
+  <h2>Fetch from device</h2>
+  <input type="text" id="device-ip" placeholder="device ip">
+  <button id="fetch-btn" type="button">fetch angles</button>
+  <span id="fetch-status"></span>
+  <!-- endpoint for this is not filled in yet, see fetch_angles_from_device in script.js -->
+</div>
+
+<div class="columns">
+
+  <div class="col">
+    <h2>Voltage</h2>
+    <table id="voltage-table">
+      <tr>
+        <th>Phase</th>
+        <th class="adv-col">Currently Connected To</th>
+        <th>Displayed Angle</th>
+      </tr>
+    </table>
+  </div>
+
+  <div class="col">
+    <h2>Current</h2>
+    <table id="current-table">
+      <tr>
+        <th>Channel</th>
+        <th>Phase</th>
+        <th class="adv-col">Currently Connected To</th>
+        <th class="adv-col">Currently Inverted</th>
+        <th>Displayed Angle</th>
+      </tr>
+    </table>
+  </div>
+
+</div>
+
+<div class="center">
+  <button id="calculate-btn" type="button">fix connections</button>
+</div>
+
+<div class="columns">
+
+  <div class="col">
+    <p id="voltage-solver-status"></p>
+    <table id="voltage-results-table">
+      <tr>
+        <th>Phase</th>
+        <th>Should Connect To</th>
+        <th>Angle After Fix</th>
+      </tr>
+    </table>
+  </div>
+
+  <div class="col">
+    <p id="solver-status"></p>
+    <table id="current-results-table">
+      <tr>
+        <th>Channel</th>
+        <th>Should Connect To</th>
+        <th>Should Invert</th>
+        <th>Angle After Fix</th>
+      </tr>
+    </table>
+  </div>
+
+</div>
+
+<h2>Setup File Lines</h2>
+<pre id="ini-output"></pre>
+
+<script src="script.js"></script>
+</body>
+</html>
